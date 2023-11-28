@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Supermercado Laranjeiras</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <style>
+        /* Estilo CSS personalizado */
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #7c7676;
+            color: rgb(255, 255, 255);
+            padding: 10px;
+        }
+
+        .container {
+            max-width: 100%;
+            width: 100%;
+            margin: 0 auto;
+            background-color: transparent;
+            border-radius: 10px;
+        }
+
+        .categoria {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+
+        .logo-banner {
+            font-size: 1.5em;
+            text-align: center;
+            background-color: transparent;
+            border-radius: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: auto;
+            z-index: 1000;
+            width: auto;
+        }
+
+        .texto-designer {
+            font-size: 1.5em;
+            margin-top: 5px;
+            margin-left: 5px;
+            margin-right: 5px;
+            text-align: center;
+            color: #000;
+        }
+
+        .logo-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .produtos-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+            margin-top: 5%;
+            min-height: 50px;
+            overflow-x: auto;
+        }
+
+        .produto {
+            background-color: #fff73c;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+            border: 1px solid #ddd;
+            margin-top: 20px;
+            min-width: 125px;
+        }
+
+        .produto img {
+            max-width: 100%;
+            max-height: 100%;
+            height: 100%;
+            width: 100%;
+        }
+
+        .escondido {
+            display: none;
+        }
+
+        .sobreposicaoInfoProduto {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .info-produto {
+            background: #ffffff;
+            border-radius: 5px;
+            padding: 20px;
+            text-align: center;
+            width: 60%;
+            height: auto;
+            align-items: center;
+            justify-content: center;
+            overflow-y: auto;
+            max-height: 90%;
+            margin-left: auto;
+            margin-right: auto;  
+        }
+
+        .fecharInfoProduto {
+            background: red;
+            color: rgb(255, 255, 255);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 15px;
+            left: 20%;
+            top: 1%;
+            position: absolute;
+            margin-top: 5%;
+        }
+
+        .mostrarInfoProduto {
+            background-color: transparent;
+            color: #000;
+            border: none;
+            cursor: pointer;
+        }
+
+        .info-produto img {
+            width: 100%;
+            height: auto;
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .produtos-horizontal {
+            display: flex;
+            margin-top: 36%;
+            gap: 10px;
+            margin-bottom: 7%;
+            width: 100%;
+            height: 100%;
+            overflow-x: auto;
+            white-space: nowrap;
+            margin-right: 10px;
+            min-width: 250px;
+        }
+
+        .produtos-horizontal img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+
+        .banner-secundario {
+            position: relative;
+            max-width: 100%;
+            overflow: hidden;
+            margin-top: 5%;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+
+        .slide:first-child {
+            display: block;
+        }
+
+        .top-image {
+            position: relative;
+            overflow: hidden;
+            margin-top: 7%;
+            margin-bottom: 5%;
+        }
+
+        .top-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .produtos-relacionados-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            margin-bottom: 7%;
+            width: 100%;
+            height: auto;
+            overflow-x: auto;
+            white-space: nowrap;
+            min-width: 100px;
+            overflow: auto;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .produtos-relacionados-container img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 50px;
+            min-width: 200px;
+        }
+
+        .produtos-relacionados-produto {
+            background-color: transparent;
+            min-width: 100px;
+        }
+
+        .popup-info-produto {
+            width: 100%;
+            height: auto;
+        }
+
+        .popup-info-produto img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+
+        .produtos-horizontal-dois {
+            display: flex;
+            margin-top: 2%;
+            gap: 10px;
+            margin-bottom: 2%;
+            width: 100%;
+            height: 100%;
+            overflow-x: auto;
+            white-space: nowrap;
+            margin-right: 10px;
+            min-width: 250px;
+        }
+
+        .produtos-horizontal-dois img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo-banner">
+            <img src="https://i.ibb.co/F52RZtq/banner.png" alt="banner" loading="lazy">
+        </div>
+
+        <!--produtos horizonta 1-->
+
+        <div class="produtos-horizontal">
+            <div class="produto">
+                <a class="mostrarInfoProduto" href="javascript:void(0)">
+                    <img src="https://i.ibb.co/25M3YYK/acem1l.png" alt="produto horizontal 1" loading="lazy">
+                </a>
+                <div class="sobreposicaoInfoProduto escondido">
+                    <div class="info-produto">
+                        <button class="fecharInfoProduto">X</button>
+                        <p class="texto-designer">Produtos</p>
+                        <p class="texto-designer">Recomendados</p>
+                        <div class="produtos-relacionados-container">
+                            <div class="produtos-relacionados-produto">
+                                <img src="https://i.ibb.co/ZTR33Df/heineken-lata.png" alt="produto relacionado 1" loading="lazy">
+                                <img src="https://i.ibb.co/jL1224t/fanta-lata.png" alt="produto relacionado 2" loading="lazy">
+                                <img src="https://i.ibb.co/L1NNq1s/skol.png" alt="produto relacionado 3" loading="lazy">
+                                <img src="https://i.ibb.co/7RFv5rB/bsiteca1l.png" alt="produto relacionado 4" loading="lazy">
+                            </div>
+                        </div>
+                        <div class="popup-info-produto">
+                            <img src="imagem sub topo fixa.png" alt="imagem popup 1" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="produto">
+                <a class="mostrarInfoProduto" href="javascript:void(0)">
+                    <img src="https://i.ibb.co/ZTR33Df/heineken-lata.png" alt="produto horizontal 2" loading="lazy">
+                </a>
+                <div class="sobreposicaoInfoProduto escondido">
+                    <div class="info-produto">
+                        <button class="fecharInfoProduto">X</button>
+                        <p class="texto-designer">Produtos</p>
+                        <p class="texto-designer">Relacionados</p>
+                        <div class="produtos-relacionados-container">
+                            <div class="produtos-relacionados-produto">
+                                <img src="https://i.ibb.co/CJj4Wvf/leite.png" alt="produto relacionado 5" loading="lazy">
+                                <img src="https://i.ibb.co/jL1224t/fanta-lata.png" alt="produto relacionado 6" loading="lazy">
+                                <img src="https://i.ibb.co/L1NNq1s/skol.png" alt="produto relacionado 7" loading="lazy">
+                                <img src="https://i.ibb.co/M6GZy4Z/ovos.png" alt="produto relacionado 8" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="produto">
+                <a class="mostrarInfoProduto" href="javascript:void(0)">
+                    <img src="https://i.ibb.co/jL1224t/fanta-lata.png" alt="produto horizontal 3" loading="lazy">
+                </a>
+                <div class="sobreposicaoInfoProduto escondido">
+                    <div class="info-produto">
+                        <button class="fecharInfoProduto">X</button>
+                        <p class="texto-designer">Produtos</p>
+                        <p class="texto-designer">relacionados</p>
+                        <div class="produtos-relacionados-container">
+                            <div class="produtos-relacionados-produto">
+                                <img src="https://i.ibb.co/ZTR33Df/heineken-lata.png" alt="produto relacionado 1" loading="lazy">
+                                <img src="https://i.ibb.co/jL1224t/fanta-lata.png" alt="produto relacionado 2" loading="lazy">
+                                <img src="https://i.ibb.co/L1NNq1s/skol.png" alt="produto relacionado 3" loading="lazy">
+                                <img src="https://i.ibb.co/M6GZy4Z/ovos.png" alt="produto relacionado 4" loading="lazy">
+                            </div>
+                        </div>
+                        <div class="popup-info-produto">
+                            <img src="imagem sub topo fixa.png" alt="imagem popup 1" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="produto">
+                <a class="mostrarInfoProduto" href="javascript:void(0)">
+                    <img src="https://i.ibb.co/L1NNq1s/skol.png" alt="produto horizontal 4" loading="lazy">
+                </a>
+                <div class="sobreposicaoInfoProduto escondido">
+                    <div class="info-produto">
+                        <button class="fecharInfoProduto">X</button>
+                        <p class="texto-designer">produtos</p>
+                        <p class="texto-designer">relacionados</p>
+                        <div class="produtos-relacionados-container">
+                            <div class="produtos-relacionados-produto">
+                                <img src="https://i.ibb.co/ZTR33Df/heineken-lata.png" alt="produto relacionado 1" loading="lazy">
+                                <img src="https://i.ibb.co/jL1224t/fanta-lata.png" alt="produto relacionado 2" loading="lazy">
+                                <img src="https://i.ibb.co/L1NNq1s/skol.png" alt="produto relacionado 3" loading="lazy">
+                                <img src="https://i.ibb.co/M6GZy4Z/ovos.png" alt="produto relacionado 4" loading="lazy">
+                            </div>
+                        </div>
+                        <div class="popup-info-produto">
+                            <img src="imagem sub topo fixa.png" alt="imagem popup 1" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="produto">
+                <a class="mostrarInfoProduto" href="javascript:void(0)">
+                    <img src="https://i.ibb.co/M6GZy4Z/ovos.png" alt="produto horizontal 5" loading="lazy">
+                </a>
+                <div class="sobreposicaoInfoProduto escondido">
+                    <div class="info-produto">
+                        <button class="fecharInfoProduto">X</button>
+                        <p class="texto-designer">produtos</p>
+                        <p class="texto-designer">relacionados</p>
+                        <div class="produtos-relacionados-container">
+                            <div class="produtos-relacionados-produto">
+                                <img src="https://i.ibb.co/ZTR33Df/heineken-lata.png" alt="produto relacionado 1" loading="lazy">
+                                <img src="https://i.ibb.co/jL1224t/fanta-lata.png" alt="produto relacionado 2" loading="lazy">
+                                <img src="https://i.ibb.co/L1NNq1s/skol.png" alt="produto relacionado 3" loading="lazy">
+                                <img src="https://i.ibb.co/M6GZy4Z/ovos.png" alt="produto relacionado 4" loading="lazy">
+                            </div>
+                        </div>
+                        <div class="popup-info-produto">
+                            <img src="imagem sub topo fixa.png" alt="imagem popup 1" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="top-image">
+            <img src="imagem topo.png" alt="imagem promocao topo" loading="lazy">
+            <img src="imagem sub topo fixa.png" alt="imagem fixa topo" loading="lazy">
+        </div>
+
+        <!--segundo banner-->
+
+        <div class="banner-secundario">
+            <img class="slide" src="https://i.ibb.co/F52RZtq/banner.png" alt="slide 1" loading="lazy">
+            <img class="slide" src="https://i.ibb.co/0J1sNYt/banner-Refri.png" alt="slide 2" loading="lazy">
+            <img class="slide" src="https://i.ibb.co/nc9DcCy/Banner-skol.png" alt="slide 3" loading="lazy">
+        </div>
+
+        <!--Produtos horizontal 2-->
+
+        <div class="produtos-horizontal-dois">
+            <div class="produto">
+                <a class="mostrarInfoProduto" href="javascript:void(0)">
+                    <img src="https://i.ibb.co/7RFv5rB/bsiteca1l.png" alt="produto horizontal 1" loading="lazy">
+                </a>
+                <div class="sobreposicaoInfoProduto escondido">
+                    <div class="info-produto">
+                        <button class="fecharInfoProduto">X</button>
+                        <p class="texto-designer">Produtos</p>
+                        <p class="texto-designer">Recomendados</p>
+                        <div class="produtos-relacionados-container">
+                            <div class="produtos-relacionados-produto">
+                                <img src="https://i.ibb.co/ZTR33Df/heineken-lata.png" alt="produto relacionado 1" loading="lazy">
+                                <img src="https://i.ibb.co/jL1224t/fanta-lata.png" alt="produto relacionado 2" loading="lazy">
+                                <img src="https://i.ibb.co/L1NNq1s/skol.png" alt="produto relacionado 3" loading="lazy">
+                                <img src="https://i.ibb.co/M6GZy4Z/ovos.png" alt="produto relacionado 4" loading="lazy">
+                            </div>
+                        </div>
+                        <div class="popup-info-produto">
+                            <img src="imagem sub topo fixa.png" alt="imagem popup 1" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="produto">
+                <a class="mostrarInfoProduto" href="javascript:void(0)">
+                    <img src="https://i.ibb.co/vc95v10/cheetos1l.png" alt="produto horizontal 2" loading="lazy">
+                </a>
+                <div class="sobreposicaoInfoProduto escondido">
+                    <div class="info-produto">
+                        <button class="fecharInfoProduto">X</button>
+                        <p class="texto-designer">Produtos</p>
+                        <p class="texto-designer">Relacionados</p>
+                        <div class="produtos-relacionados-container">
+                            <div class="produtos-relacionados-produto">
+                                <img src="https://i.ibb.co/CJj4Wvf/leite.png" alt="produto relacionado 5" loading="lazy">
+                                <img src="https://i.ibb.co/jL1224t/fanta-lata.png" alt="produto relacionado 6" loading="lazy">
+                                <img src="https://i.ibb.co/L1NNq1s/skol.png" alt="produto relacionado 7" loading="lazy">
+                                <img src="https://i.ibb.co/M6GZy4Z/ovos.png" alt="produto relacionado 8" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="produto">
+                <a class="mostrarInfoProduto" href="javascript:void(0)">
+                    <img src="https://i.ibb.co/3R1NkH6/coca-cola1l.png" alt="produto horizontal 3" loading="lazy">
+                </a>
+                <div class="sobreposicaoInfoProduto escondido">
+                    <div class="info-produto">
+                        <button class="fecharInfoProduto">X</button>
+                        <p class="texto-designer">Produtos</p>
+                        <p class="texto-designer">relacionados</p>
+                        <div class="produtos-relacionados-container">
+                            <div class="produtos-relacionados-produto">
+                                <img src="https://i.ibb.co/ZTR33Df/heineken-lata.png" alt="produto relacionado 1" loading="lazy">
+                                <img src="https://i.ibb.co/jL1224t/fanta-lata.png" alt="produto relacionado 2" loading="lazy">
+                                <img src="https://i.ibb.co/L1NNq1s/skol.png" alt="produto relacionado 3" loading="lazy">
+                                <img src="https://i.ibb.co/M6GZy4Z/ovos.png" alt="produto relacionado 4" loading="lazy">
+                            </div>
+                        </div>
+                        <div class="popup-info-produto">
+                            <img src="imagem sub topo fixa.png" alt="imagem popup 1" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="produto">
+                <a class="mostrarInfoProduto" href="javascript:void(0)">
+                    <img src="https://i.ibb.co/kMK02Pp/fardo-skol1l.png" alt="produto horizontal 4" loading="lazy">
+                </a>
+                <div class="sobreposicaoInfoProduto escondido">
+                    <div class="info-produto">
+                        <button class="fecharInfoProduto">X</button>
+                        <p class="texto-designer">produtos</p>
+                        <p class="texto-designer">relacionados</p>
+                        <div class="produtos-relacionados-container">
+                            <div class="produtos-relacionados-produto">
+                                <img src="https://i.ibb.co/ZTR33Df/heineken-lata.png" alt="produto relacionado 1" loading="lazy">
+                                <img src="https://i.ibb.co/jL1224t/fanta-lata.png" alt="produto relacionado 2" loading="lazy">
+                                <img src="https://i.ibb.co/L1NNq1s/skol.png" alt="produto relacionado 3" loading="lazy">
+                                <img src="https://i.ibb.co/M6GZy4Z/ovos.png" alt="produto relacionado 4" loading="lazy">
+                            </div>
+                        </div>
+                        <div class="popup-info-produto">
+                            <img src="imagem sub topo fixa.png" alt="imagem popup 1" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="produto">
+                <a class="mostrarInfoProduto" href="javascript:void(0)">
+                    <img src="https://i.ibb.co/mNcLwhk/garoto1l.png" alt="produto horizontal 5" loading="lazy">
+                </a>
+                <div class="sobreposicaoInfoProduto escondido">
+                    <div class="info-produto">
+                        <button class="fecharInfoProduto">X</button>
+                        <p class="texto-designer">produtos</p>
+                        <p class="texto-designer">relacionados</p>
+                        <div class="produtos-relacionados-container">
+                            <div class="produtos-relacionados-produto">
+                                <img src="https://i.ibb.co/ZTR33Df/heineken-lata.png" alt="produto relacionado 1" loading="lazy">
+                                <img src="https://i.ibb.co/jL1224t/fanta-lata.png" alt="produto relacionado 2" loading="lazy">
+                                <img src="https://i.ibb.co/L1NNq1s/skol.png" alt="produto relacionado 3" loading="lazy">
+                                <img src="https://i.ibb.co/M6GZy4Z/ovos.png" alt="produto relacionado 4" loading="lazy">
+                            </div>
+                        </div>
+                        <div class="popup-info-produto">
+                            <img src="imagem sub topo fixa.png" alt="imagem popup 1" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Produtos Vertical-->
+
+        <div class="produtos-container">
+            <div class="produto">
+               <a class="mostrarInfoProduto" href="javascript:void(0);">
+                <img src="https://i.ibb.co/rH0wyh8/torcida.png" alt="produto 1" loading="lazy">
+               </a>
+                <div class="sobreposicaoInfoProduto escondido">
+                    <div class="info-produto">
+                        <button class="fecharInfoProduto">X</button>
+                        <p class="texto-designer">produtos</p>
+                        <p class="texto-designer">relacionados</p>
+                        <div class="produtos-relacionados-container">
+                            <div class="produtos-relacionados-produto">
+                                <img src="https://i.ibb.co/ZTR33Df/heineken-lata.png" alt="produto relacionado 1" loading="lazy">
+                                <img src="https://i.ibb.co/jL1224t/fanta-lata.png" alt="produto relacionado 2" loading="lazy">
+                                <img src="https://i.ibb.co/L1NNq1s/skol.png" alt="produto relacionado 3" loading="lazy">
+                                <img src="https://i.ibb.co/M6GZy4Z/ovos.png" alt="produto relacionado 4" loading="lazy">
+                            </div>
+                        </div>
+                        <div class="popup-info-produto">
+                            <img src="imagem sub topo fixa.png" alt="imagem popup 1" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="produto">
+                <a class="mostrarInfoProduto" href="javascript:void(0);">
+                    <img src="https://i.ibb.co/r3FpqSS/trakinas1l.png" alt="produto 2" loading="lazy">
+                </a>
+                <div class="sobreposicaoInfoProduto escondido">
+                    <div class="info-produto">
+                        <button class="fecharInfoProduto">X</button>
+                        <p class="texto-designer">produtos</p>
+                        <p class="texto-designer">relacionados</p>
+                        <div class="produtos-relacionados-container">
+                            <div class="produtos-relacionados-produto">
+                                <img src="https://i.ibb.co/ZTR33Df/heineken-lata.png" alt="produto relacionado 1" loading="lazy">
+                                <img src="https://i.ibb.co/jL1224t/fanta-lata.png" alt="produto relacionado 2" loading="lazy">
+                                <img src="https://i.ibb.co/L1NNq1s/skol.png" alt="produto relacionado 3" loading="lazy">
+                                <img src="https://i.ibb.co/M6GZy4Z/ovos.png" alt="produto relacionado 4" loading="lazy">
+                            </div>
+                        </div>
+                        <div class="popup-info-produto">
+                            <img src="imagem sub topo fixa.png" alt="imagem popup 1" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="produto">
+                <a class="mostrarInfoProduto" href="javascript:void(0);">
+                    <img src="https://i.ibb.co/pZWy6Yb/varriata1l.png" alt="produto 3" loading="lazy">
+                </a>
+                <div class="sobreposicaoInfoProduto escondido">
+                    <div class="info-produto">
+                        <button class="fecharInfoProduto">X</button>
+                        <p class="texto-designer">produtos</p>
+                        <p class="texto-designer">relacionados</p>
+                        <div class="produtos-relacionados-container">
+                            <div class="produtos-relacionados-produto">
+                                <img src="https://i.ibb.co/ZTR33Df/heineken-lata.png" alt="produto relacionado 1" loading="lazy">
+                                <img src="https://i.ibb.co/jL1224t/fanta-lata.png" alt="produto relacionado 2" loading="lazy">
+                                <img src="https://i.ibb.co/L1NNq1s/skol.png" alt="produto relacionado 3" loading="lazy">
+                                <img src="https://i.ibb.co/M6GZy4Z/ovos.png" alt="produto relacionado 4" loading="lazy">
+                            </div>
+                        </div>
+                        <div class="popup-info-produto">
+                            <img src="imagem sub topo fixa.png" alt="imagem popup 1" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="produto">
+                <a class="mostrarInfoProduto" href="javascript:void(0);">
+                    <img src="https://i.ibb.co/mq5wW25/nesttle-1l.png" alt="produto 4" loading="lazy">
+                </a>
+                <div class="sobreposicaoInfoProduto escondido">
+                    <div class="info-produto">
+                        <button class="fecharInfoProduto">X</button>
+                        <p class="texto-designer">produtos</p>
+                        <p class="texto-designer">relacionados</p>
+                        <div class="produtos-relacionados-container">
+                            <div class="produtos-relacionados-produto">
+                                <img src="https://i.ibb.co/ZTR33Df/heineken-lata.png" alt="produto relacionado 1" loading="lazy">
+                                <img src="https://i.ibb.co/jL1224t/fanta-lata.png" alt="produto relacionado 2" loading="lazy">
+                                <img src="https://i.ibb.co/L1NNq1s/skol.png" alt="produto relacionado 3" loading="lazy">
+                                <img src="https://i.ibb.co/M6GZy4Z/ovos.png" alt="produto relacionado 4" loading="lazy">
+                            </div>
+                        </div>
+                        <div class="popup-info-produto">
+                            <img src="imagem sub topo fixa.png" alt="imagem popup 1" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="produto">
+                <a class="mostrarInfoProduto" href="javascript:void(0);">
+                    <img src="https://i.ibb.co/7R8MPGz/passatempo1l.png" alt="produto 5" loading="lazy">
+                </a>
+                <div class="sobreposicaoInfoProduto escondido">
+                    <div class="info-produto">
+                        <button class="fecharInfoProduto">X</button>
+                        <p class="texto-designer">produtos</p>
+                        <p class="texto-designer">relacionados</p>
+                        <div class="produtos-relacionados-container">
+                            <div class="produtos-relacionados-produto">
+                                <img src="https://i.ibb.co/ZTR33Df/heineken-lata.png" alt="produto relacionado 1" loading="lazy">
+                                <img src="https://i.ibb.co/jL1224t/fanta-lata.png" alt="produto relacionado 2" loading="lazy">
+                                <img src="https://i.ibb.co/L1NNq1s/skol.png" alt="produto relacionado 3" loading="lazy">
+                                <img src="https://i.ibb.co/M6GZy4Z/ovos.png" alt="produto relacionado 4" loading="lazy">
+                            </div>
+                        </div>
+                        <div class="popup-info-produto">
+                            <img src="imagem sub topo fixa.png" alt="imagem popup 1" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="produto">
+                <a class="mostrarInfoProduto" href="javascript:void(0);">
+                    <img src="https://i.ibb.co/C13yXNZ/pepsi-1L.png" alt="produto 6" loading="lazy">
+                </a>
+                <div class="sobreposicaoInfoProduto escondido">
+                    <div class="info-produto">
+                        <button class="fecharInfoProduto">X</button>
+                        <p class="texto-designer">produtos</p>
+                        <p class="texto-designer">Relacionados</p>
+                        <div class="produtos-relacionados-container">
+                            <div class="produtos-relacionados-produto">
+                                <img src="https://i.ibb.co/ZTR33Df/heineken-lata.png" alt="produto relacionado 1" loading="lazy">
+                                <img src="https://i.ibb.co/jL1224t/fanta-lata.png" alt="produto relacionado 2" loading="lazy">
+                                <img src="https://i.ibb.co/L1NNq1s/skol.png" alt="produto relacionado 3" loading="lazy">
+                                <img src="https://i.ibb.co/M6GZy4Z/ovos.png" alt="produto relacionado 4" loading="lazy">
+                            </div>
+                        </div>
+                        <div class="popup-info-produto">
+                            <img src="imagem sub topo fixa.png" alt="imagem popup 1" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const mostrarInfoProdutos = document.querySelectorAll(".mostrarInfoProduto");
+        const sobreposicaoInfoProdutos = document.querySelectorAll(".sobreposicaoInfoProduto");
+        const fecharInfoProdutos = document.querySelectorAll(".fecharInfoProduto");
+
+        mostrarInfoProdutos.forEach((botao, index) => {
+            botao.addEventListener("click", function() {
+                sobreposicaoInfoProdutos[index].style.display = "block";
+            });
+
+            fecharInfoProdutos[index].addEventListener("click", function() {
+                sobreposicaoInfoProdutos[index].style.display = "none";
+            });
+        });
+
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+
+        function nextSlide() {
+            slides[currentSlide].style.display ='none';
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].style.display ='block';
+        }
+
+        setInterval(nextSlide, 2000);
+    </script>
+</body>
+</html>
+
